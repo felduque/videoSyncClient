@@ -1,7 +1,7 @@
 import type React from "react";
 import { BadgeInfo, CheckCircle, XCircle } from "lucide-react";
 import { useMemo } from "react";
-import { passwordRequirements } from "./user-validation.ts";
+import { passwordRequirements } from "./helper";
 
 interface PasswordStrengthProps {
   password: string;
