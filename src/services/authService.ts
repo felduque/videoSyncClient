@@ -3,7 +3,7 @@ import { post } from "../lib/api";
 import { LoginResponse, RegisterResponse } from "@/types/api/response.types";
 
 export const login = (data: LoginRequest) =>
-  post<LoginResponse>("/api/login", data);
+  post<LoginResponse>("/login", data);
 
 // docs
 
@@ -18,4 +18,4 @@ export const login = (data: LoginRequest) =>
  * @returns  {Promise<RegisterResponse>}
  */
 export const register = (data: RegisterRequest): Promise<RegisterResponse> =>
-  post<RegisterResponse>("/api/register", data);
+  post<RegisterResponse>("/register", data);

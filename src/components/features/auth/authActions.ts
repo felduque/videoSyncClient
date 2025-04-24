@@ -26,9 +26,9 @@ export const loginAction = async (
     }
 
     const response = await login(loginData);
-    if (response.status === "success") {
-      setCookie('tkAccess', response.data.tkAccess, 900);
-    }
+    // if (response.status === "success") {
+    //   setCookie('tkAccess', response.data.tkAccess, 900);
+    // }
 
     return {
       status: response.status,
@@ -72,9 +72,9 @@ export const registerAction = async (
 
   try {
     const response = await register(registerData);
-    if (response.status === "success") {
-      setCookie('tkAccess', response.data.tkAccess, 900);
-    }
+    // if (response.status === "success") {
+    //   setCookie('tkAccess', response.data.tkAccess, 900);
+    // }
 
     return {
       status: response.status,

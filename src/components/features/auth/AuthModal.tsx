@@ -17,7 +17,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import { loginAction, registerAction } from "./authActions.ts";
 import { PasswordStrength } from "./PasswordStrength.tsx";
 import { initialStateLogin, initialStateRegister } from "./helper.ts";
-
+import { useRouter } from "next/navigation"
+ 
 export function AuthModal() {
   const [isLogin, setIsLogin] = useState(true);
   const { isAuthModalOpen, closeAuthModal, setIsAuthenticated } = useAuth();
@@ -31,13 +32,23 @@ export function AuthModal() {
   const [registerState, registerActionState, isRegisterPending] =
     useActionState(registerAction, initialStateRegister);
 
+  const router = useRouter()
+
   const formRef = useRef<HTMLFormElement>(null);
 
-  // useEffect(() => {
-  //   console.log(registerState.errors?.username)
-  // }, [ registerState ])
+  useEffect(() => {
+    if (registerState.status === "success" || loginState.status === "success") {
+      resetStates();
+      setIsAuthenticated(true);
+      closeAuthModal();
+      // router.push("/rooms")
+    }
+  }, [registerState, loginState]);
 
   useEffect(() => {
+    resetStates();
+  }, [isLogin]);
+  const resetStates = (): void => {
     if (!isLogin) {
       registerAction(null, null);
     } else {
@@ -45,9 +56,9 @@ export function AuthModal() {
     }
     formRef.current?.reset();
     setPasswordCheck("");
-  }, [isLogin]);
-
+  };
   const toggleAuth = () => setIsLogin(!isLogin);
+  
   return (
     <Dialog open={isAuthModalOpen} onOpenChange={closeAuthModal}>
       <DialogContent className="sm:max-w-[425px]">
@@ -173,15 +184,6 @@ export function AuthModal() {
                   : isLogin
                   ? "Login"
                   : "Register"}
-              </Button>
-              <Button
-                className="w-full"
-                onClick={() => {
-                  registerAction(null, null);
-                  formRef.current?.reset();
-                }}
-              >
-                Testing
               </Button>
             </form>
           </motion.div>
